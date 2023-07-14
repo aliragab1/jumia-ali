@@ -24,6 +24,7 @@ const authRoute = require("./routes/authRoute");
 const reviewRoute = require("./routes/reviewRoute");
 const cartRoute = require("./routes/cartRoute");
 const orderRoute = require("./routes/orderRoute");
+const { webhookCheckout } = require("./services/orderService");
 
 // Connect with db
 dbConnection();
