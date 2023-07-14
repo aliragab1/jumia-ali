@@ -39,11 +39,11 @@ app.options("*", cors());
 app.use(compression());
 
 // Checkout webhook
-// app.post(
-//   "/webhook-checkout",
-//   express.raw({ type: "application/json" }),
-//   webhookCheckout
-// );
+app.post(
+  "/webhook-checkout",
+  express.raw({ type: "application/json" }),
+  webhookCheckout
+);
 // Middlewares
 app.use(express.json());
 // app.use(express.static(path.join(__dirname, "uploads")));
