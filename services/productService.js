@@ -7,12 +7,20 @@ const ProductModel = require("../models/productModel");
 exports.setcategoryIdToBody = (req, res, next) => {
   // Nested
   if (!req.body.category) req.body.category = req.params.categoryId;
+  // if (!req.body.seller) req.body.seller = req.params.userId;
   next();
 };
+// exports.setsellerIdToBody = (req, res, next) => {
+//   // Nested
+//   // if (!req.body.category) req.body.category = req.params.categoryId;
+//   if (!req.body.seller) req.body.seller = req.params.userId;
+//   next();
+// };
 
 // to add new products
 exports.createProduct = asyncHandler(async (req, res) => {
   req.body.slug = slugify(req.body.name);
+  req.body.seller = req.user._id;
   let Product = new ProductModel(req.body);
   await Product.save();
   res.status(200).json(Product);
@@ -24,6 +32,9 @@ exports.getProducts = asyncHandler(async (req, res) => {
   if (req.params.categoryId) {
     filter = { category: req.params.categoryId };
   }
+  // if (req.params.userId) {
+  //   filter = { seller: req.params.userId };
+  // }
   let apiFeatures = new ApiFeatures(ProductModel.find(filter), req.query)
     .paginate()
     .fields()

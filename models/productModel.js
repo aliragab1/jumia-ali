@@ -55,6 +55,11 @@ const productSchema = new mongoose.Schema(
       ref: "Brand",
       required: [true, "Product brand required"],
     },
+    seller: {
+      type: mongoose.Schema.ObjectId,
+      ref: "User",
+      required: [true, "seller required"],
+    },
     averageRating: {
       type: Number,
       min: [1, "ratingAverage must be greater than 1"],

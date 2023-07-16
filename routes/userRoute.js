@@ -16,6 +16,7 @@ const {
   changeUserPasswordValidator,
 } = require("../utils/validators/userValidator");
 const authService = require("../services/authService");
+const productRoute = require("./productRoute");
 
 const router = express.Router();
 

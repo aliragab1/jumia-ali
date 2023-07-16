@@ -25,7 +25,7 @@ router
   .route("/")
   .post(
     authService.protect,
-    authService.allowedTo("admin"),
+    authService.allowedTo("admin", "seller"),
     uploadMixOfFiles(fields, "products"),
     setcategoryIdToBody,
     createProductValidator,
@@ -37,14 +37,14 @@ router
   .get(getProductValidator, getProduct)
   .put(
     authService.protect,
-    authService.allowedTo("admin"),
+    authService.allowedTo("admin", "seller"),
     uploadMixOfFiles(fields, "products"),
     updateProductValidator,
     updateProduct
   )
   .delete(
     authService.protect,
-    authService.allowedTo("admin"),
+    authService.allowedTo("admin", "seller"),
     deleteProductValidator,
     deleteProduct
   );
