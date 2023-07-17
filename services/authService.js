@@ -14,13 +14,18 @@ exports.signup = asyncHandler(async (req, res, next) => {
     name: req.body.name,
     email: req.body.email,
     password: req.body.password,
+    role: req.body.role,
   });
 
   // 2- Generate token
   // const token = createToken(user._id);
-  const token = jwt.sign({ userId: user._id,name:user.name }, process.env.JWT_SECRET_KEY, {
-    expiresIn: process.env.JWT_EXPIRE_TIME,
-  });
+  const token = jwt.sign(
+    { userId: user._id, name: user.name },
+    process.env.JWT_SECRET_KEY,
+    {
+      expiresIn: process.env.JWT_EXPIRE_TIME,
+    }
+  );
   res.status(201).json({ data: user, token });
 });
 
@@ -38,9 +43,13 @@ exports.login = asyncHandler(async (req, res, next) => {
 
   // 3) generate token
   // const token = createToken(user._id);
-  const token = jwt.sign({ userId: user._id ,name:user.name}, process.env.JWT_SECRET_KEY, {
-    expiresIn: process.env.JWT_EXPIRE_TIME,
-  });
+  const token = jwt.sign(
+    { userId: user._id, name: user.name },
+    process.env.JWT_SECRET_KEY,
+    {
+      expiresIn: process.env.JWT_EXPIRE_TIME,
+    }
+  );
 
   // // Delete password from response
   // delete user._doc.password;
