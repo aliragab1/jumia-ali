@@ -97,7 +97,7 @@ productSchema.pre("findOne", function () {
   this.populate([
     {
       path: "reviews",
-      select: "title",
+      select: ["title", "ratingAverage"],
     },
   ]);
 });
