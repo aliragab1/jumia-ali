@@ -20,7 +20,7 @@ exports.signup = asyncHandler(async (req, res, next) => {
   // 2- Generate token
   // const token = createToken(user._id);
   const token = jwt.sign(
-    { userId: user._id, name: user.name },
+    { userId: user._id, name: user.name, role: user.role },
     process.env.JWT_SECRET_KEY,
     {
       expiresIn: process.env.JWT_EXPIRE_TIME,
@@ -44,7 +44,7 @@ exports.login = asyncHandler(async (req, res, next) => {
   // 3) generate token
   // const token = createToken(user._id);
   const token = jwt.sign(
-    { userId: user._id, name: user.name },
+    { userId: user._id, name: user.name, role: user.role },
     process.env.JWT_SECRET_KEY,
     {
       expiresIn: process.env.JWT_EXPIRE_TIME,
