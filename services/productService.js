@@ -110,6 +110,7 @@ exports.getProducts = asyncHandler(async (req, res) => {
   // if (req.params.userId) {
   //   filter = { seller: req.params.userId };
   // }
+  const totalProducts = await  ProductModel.countDocuments();
   let apiFeatures = new ApiFeatures(ProductModel.find(filter), req.query)
     .paginate()
     .fields()
@@ -123,6 +124,7 @@ exports.getProducts = asyncHandler(async (req, res) => {
     results: Products.length,
     page: apiFeatures.page,
     limit: apiFeatures.limit,
+    totalProducts,
     Products,
   });
 });

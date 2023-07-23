@@ -9,12 +9,20 @@ const bcrypt = require("bcryptjs");
 // @access  private
 exports.getUsers = asyncHandler(async (req, res) => {
   const page = req.query.page * 1 || 1;
-  const limit = req.query.limit * 1 || 5;
+  const limit = req.query.limit * 1 || 15;
   const skip = (page - 1) * limit;
 
+  const totalUsers = await userModel.countDocuments();
   const Users = await userModel.find({}).skip(skip).limit(limit);
-  res.status(200).json({ results: Users.length, page, data: Users });
+  
+  res.status(200).json({
+    results: Users.length,
+    page,
+    totalUsers,
+    data: Users,
+  });
 });
+
 
 // @desc    Get specific user by id
 // @route   GET /api/v1/users/:id
@@ -53,8 +61,8 @@ exports.updateUser = asyncHandler(async (req, res, next) => {
   let user = await userModel.findByIdAndUpdate(
     req.params.id,
     {
-      name: req.params.name,
-      slug: req.params.slug,
+      name: req.body.name,
+      slug: req.body.slug,
       email: req.body.email,
       profileImg: req.body.profileImg,
       role: req.body.role,

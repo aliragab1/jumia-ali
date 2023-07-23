@@ -63,18 +63,20 @@ exports.updateUserValidator = [
       req.body.slug = slugify(val);
       return true;
     }),
-  check("email")
+    check("email")
     .notEmpty()
     .withMessage("Email required")
     .isEmail()
     .withMessage("Invalid email address")
-    .custom((val) =>
-      User.findOne({ email: val }).then((user) => {
-        if (user) {
-          return Promise.reject(new Error("E-mail already in user"));
+    .custom(async (val, { req }) => {
+      const user = await User.findById(req.params.id);
+      if (user.email !== val) {
+        const existingUser = await User.findOne({ email: val });
+        if (existingUser) {
+          throw new Error("E-mail already in use");
         }
-      })
-    ),
+      }
+    }),
 
   check("profileImg").optional(),
   check("role").optional(),

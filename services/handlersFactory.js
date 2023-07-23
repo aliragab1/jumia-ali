@@ -1,6 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const ApiError = require("../utils/apiError");
-const ApiFeatures = require("../utils/apiError");
+const ApiFeatures = require("../utils/ApiFeatures");
 
 exports.deleteOne = (Model) =>
   asyncHandler(async (req, res, next) => {
@@ -68,7 +68,7 @@ exports.getAll = (Model, modelName = "") =>
       .paginate(documentsCounts)
       .filter()
       .search(modelName)
-      .limitFields()
+      .fields()
       .sort();
 
     // Execute query
@@ -77,5 +77,10 @@ exports.getAll = (Model, modelName = "") =>
 
     res
       .status(200)
-      .json({ results: documents.length, paginationResult, data: documents });
+      .json({ 
+        results: documents.length,
+         paginationResult,
+          data: documents,
+          documentsCounts,
+         });
   });
