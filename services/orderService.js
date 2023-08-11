@@ -155,15 +155,15 @@ exports.checkoutSession = asyncHandler(async (req, res, next) => {
       },
     ],
     mode: "payment",
-    success_url: `${req.protocol}://${req.get("host")}/orders`,
-    cancel_url: `${req.protocol}://${req.get("host")}/cart`,
+    success_url: `https://jumiaiti.web.app/orders`,
+    cancel_url: `https://jumiaiti.web.app/cart`,
     customer_email: req.user.email,
     client_reference_id: req.params.cartId,
     metadata: req.body.shippingAddress,
   });
 
-  // success_url: `http://localhost:3000/orders`,
-  // cancel_url: `http://localhost:3000/cart`,
+  // success_url: `${req.protocol}://${req.get("host")}/orders`,
+  // cancel_url: `${req.protocol}://${req.get("host")}/cart`,
 
   // 4) send session to response
   res.status(200).json({ status: "success", session });
